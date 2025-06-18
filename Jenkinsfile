@@ -16,13 +16,19 @@ pipeline {
       }
     }
 
-stage('SonarQube Analysis') {
-  steps {
-    withSonarQubeEnv('SonarQube') {
-      sh '/opt/sonar-scanner/bin/sonar-scanner -Dsonar.projectKey=nti-app -Dsonar.sources=. -Dsonar.host.url=http://13.220.161.33:9000 -Dsonar.login=$SONAR_TOKEN'
+    stage('SonarQube Analysis') {
+      steps {
+        withSonarQubeEnv('SonarQube') {
+          sh '''
+            /opt/sonar-scanner/bin/sonar-scanner \
+              -Dsonar.projectKey=nti-app \
+              -Dsonar.sources=. \
+              -Dsonar.host.url=http://13.220.161.33:9000 \
+              -Dsonar.login=$SONAR_TOKEN
+          '''
+        }
+      }
     }
-  }
-}
 
     stage('Wait for Quality Gate') {
       steps {
@@ -36,11 +42,14 @@ stage('SonarQube Analysis') {
       steps {
         dir('backend') {
           script {
-            def image = "${env.ECR_BACKEND}:latest"
+            def commit = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
+            env.BACKEND_TAG = commit
+            def image = "${env.ECR_BACKEND}:${commit}"
+
             sh """
               docker build -t ${image} .
               trivy image --exit-code 1 --severity HIGH,CRITICAL ${image}
-              aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin 176381609267.dkr.ecr.us-east-1.amazonaws.com
+              aws ecr get-login-password --region ${env.AWS_REGION} | docker login --username AWS --password-stdin 176381609267.dkr.ecr.us-east-1.amazonaws.com
               docker push ${image}
             """
           }
@@ -52,14 +61,27 @@ stage('SonarQube Analysis') {
       steps {
         dir('frontend') {
           script {
-            def image = "${env.ECR_FRONTEND}:latest"
+            def image = "${env.ECR_FRONTEND}:${env.BACKEND_TAG}"
+            env.FRONTEND_TAG = env.BACKEND_TAG // same as backend for consistency
+
             sh """
               docker build -t ${image} .
               trivy image --exit-code 1 --severity HIGH,CRITICAL ${image}
-              aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin 176381609267.dkr.ecr.us-east-1.amazonaws.com
+              aws ecr get-login-password --region ${env.AWS_REGION} | docker login --username AWS --password-stdin 176381609267.dkr.ecr.us-east-1.amazonaws.com
               docker push ${image}
             """
           }
+        }
+      }
+    }
+
+    stage('Update Deployment YAMLs') {
+      steps {
+        script {
+          sh """
+            sed -i 's|image:.*backend.*|image: ${env.ECR_BACKEND}:${env.BACKEND_TAG}|' k8s/backend-deployment.yaml
+            sed -i 's|image:.*frontend.*|image: ${env.ECR_FRONTEND}:${env.FRONTEND_TAG}|' k8s/frontend-deployment.yaml
+          """
         }
       }
     }
