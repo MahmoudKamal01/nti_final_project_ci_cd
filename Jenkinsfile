@@ -18,7 +18,7 @@ pipeline {
 stage('SonarQube Analysis') {
   steps {
     withSonarQubeEnv('SonarQube') {
-      sh 'sonar-scanner -Dsonar.projectKey=nti-app -Dsonar.sources=. -Dsonar.host.url=http://http://13.220.161.33:9000 -Dsonar.login=$SONAR_TOKEN'
+      sh 'sonar-scanner -Dsonar.projectKey=nti-app -Dsonar.sources=. -Dsonar.host.url=http://13.220.161.33:9000 -Dsonar.login=$SONAR_TOKEN'
     }
   }
 }
