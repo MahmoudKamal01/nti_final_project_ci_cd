@@ -12,7 +12,7 @@ ENV VITE_API_BASE_URL=$VITE_API_BASE_URL
 RUN npm run build
 
 # Stage 2: Serve
-FROM nginx:alpine
+FROM nginx:1.28-alpine
 
 # Remove default nginx static files
 RUN rm -rf /usr/share/nginx/html/*
