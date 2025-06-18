@@ -5,6 +5,7 @@ pipeline {
     AWS_REGION = 'us-east-1'
     ECR_BACKEND = '176381609267.dkr.ecr.us-east-1.amazonaws.com/backend'
     ECR_FRONTEND = '176381609267.dkr.ecr.us-east-1.amazonaws.com/frontend'
+    SONAR_TOKEN = credentials('sonarqube-token')
   }
 
   stages {
