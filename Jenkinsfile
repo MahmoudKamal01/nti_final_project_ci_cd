@@ -15,13 +15,13 @@ pipeline {
       }
     }
 
-    stage('SonarQube Analysis') {
-      steps {
-        withSonarQubeEnv('SonarQube') {
-          sh 'sonar-scanner -Dsonar.projectKey=nti-backend -Dsonar.sources=./backend -Dsonar.language=js'
-        }
-      }
+stage('SonarQube Analysis') {
+  steps {
+    withSonarQubeEnv('SonarQube') {
+      sh 'sonar-scanner -Dsonar.projectKey=nti-app -Dsonar.sources=. -Dsonar.host.url=http://http://13.220.161.33:9000 -Dsonar.login=$SONAR_TOKEN'
     }
+  }
+}
 
     stage('Wait for Quality Gate') {
       steps {
