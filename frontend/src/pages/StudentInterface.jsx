@@ -18,6 +18,7 @@ import {
   ArrowDownTrayIcon,
   MagnifyingGlassIcon,
   DocumentTextIcon,
+  HomeIcon,  
 } from "@heroicons/react/24/solid";
 import { Link } from "react-router-dom";
 import api from "@/configs/api";
@@ -63,6 +64,19 @@ export default function StudentsInterface() {
     <>
       {/* Header with Logo & Title */}
       <div className="relative h-72 w-full n rounded-xl bg-cover bg-center bg-[url('/img/background-image.png')]">
+          <div className="absolute top-4 left-4">
+            <Link to="/dashboard">
+              <Button
+                size="sm"
+                variant="text"
+                color="white"
+                className="flex items-center gap-1 font-arabic"
+              >
+                <HomeIcon className="h-5 w-5" />
+                لوحة التحكم
+              </Button>
+            </Link>
+          </div>
         <div className="absolute inset-0 bg-gray-900/75" />
         <div className="absolute inset-0 mb-32 flex flex-col justify-center items-center text-center p-4">
           <Avatar src="/img/logo.jpg" alt="Logo" size="xl" variant="circular" />
