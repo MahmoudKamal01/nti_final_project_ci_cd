@@ -87,7 +87,7 @@ export default function StudentsInterface() {
       </div>
 
       {/* Search Interface */}
-      <Card className="mx-4 -mt-20 mb-8 border border-blue-gray-100 shadow min-h-[600px]">
+      <Card className="mx-4 -mt-20 mb-8 border border-blue-gray-100 shadow min-h-[600px] bg-sky-500">
         <CardHeader className="p-6 text-right">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div className="flex items-center gap-4 flex-1">
