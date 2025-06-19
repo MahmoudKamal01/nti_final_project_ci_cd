@@ -64,7 +64,7 @@ export default function StudentsInterface() {
     <>
       {/* Header with Logo & Title */}
       <div className="relative h-72 w-full n rounded-xl bg-cover bg-center bg-[url('/img/background-image.png')]">
-          <div className="absolute top-4 left-4 z-20 hover:cursor-pointer">
+{/*           <div className="absolute top-4 left-4 z-20 hover:cursor-pointer">
             <Link to="/dashboard">
               <Button
                 size="sm"
@@ -76,7 +76,7 @@ export default function StudentsInterface() {
                 لوحة التحكم
               </Button>
             </Link>
-          </div>
+          </div> */}
         <div className="absolute inset-0 bg-gray-900/75 z-0  pointer-events-none" />
         <div className="absolute inset-0 mb-32 flex flex-col justify-center items-center text-center p-4">
           <Avatar src="/img/logo.jpg" alt="Logo" size="xl" variant="circular" />
