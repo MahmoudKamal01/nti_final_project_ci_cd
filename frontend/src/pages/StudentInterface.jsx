@@ -64,7 +64,7 @@ export default function StudentsInterface() {
     <>
       {/* Header with Logo & Title */}
       <div className="relative h-72 w-full n rounded-xl bg-cover bg-center bg-[url('/img/background-image.png')]">
-          <div className="absolute top-4 left-4">
+          <div className="absolute top-4 left-4 z-12 hover:cursor-pointer">
             <Link to="/dashboard">
               <Button
                 size="sm"
