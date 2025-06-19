@@ -55,8 +55,8 @@
                     labels:
                       severity: warning
                     annotations:
-                      summary: "High CPU usage on pod {{ $labels.pod }}"
-                      description: "{{ $labels.pod }} CPU usage > 80% for more than 2 minutes."
+                      summary: "High CPU usage on pod {{ '{{' }} $labels.pod {{ '}}' }}"
+                      description: "{{ '{{' }} $labels.pod {{ '}}' }} CPU usage > 80% for more than 2 minutes."
 
                   - alert: HighPodMemory
                     expr: sum(container_memory_usage_bytes{container!="",pod!=""}) by (pod) /
@@ -65,8 +65,8 @@
                     labels:
                       severity: warning
                     annotations:
-                      summary: "High Memory usage on pod {{ $labels.pod }}"
-                      description: "{{ $labels.pod }} memory usage > 80% for more than 2 minutes."
+                      summary: "High Memory usage on pod {{ '{{' }} $labels.pod {{ '}}' }}"
+                      description: "{{ '{{' }} $labels.pod {{ '}}' }} memory usage > 80% for more than 2 minutes."
 
     - name: Apply Alert Rules
       command: kubectl apply -f {{ alert_rule_file }}
