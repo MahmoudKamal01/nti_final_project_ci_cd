@@ -100,4 +100,29 @@ pipeline {
       }
     }
   }
+
+   post {
+    always {
+      slackSend (
+        channel: '#test', 
+        color: '#439FE0', 
+        message: "📣 Job `${env.JOB_NAME}` started: Build #${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
+      )
+    }
+    success {
+      slackSend (
+        channel: '#test', 
+        color: 'good', 
+        message: "✅ Job `${env.JOB_NAME}` succeeded: Build #${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
+      )
+    }
+    failure {
+      slackSend (
+        channel: '#test', 
+        color: 'danger', 
+        message: "❌ Job `${env.JOB_NAME}` failed: Build #${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
+      )
+    }
+  }
+  
 }
