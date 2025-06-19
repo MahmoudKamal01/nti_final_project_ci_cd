@@ -5,10 +5,8 @@ A **MERN**-stack project: a student certificate delivery platform with an admin 
 
 ## 🎥 Demo Video
 
-<video src="./docs/demo.mp4" controls width="800">
-  Your browser does not support the video tag.  
-  [Download the demo video](./docs/demo.mp4)
-</video>
+▶️ [Watch the demo on YouTube](https://youtu.be/hyQF2E94qrA)
+
 
 
 ---
