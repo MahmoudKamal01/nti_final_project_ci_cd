@@ -4,7 +4,7 @@
   gather_facts: false
   vars:
     namespace: monitoring
-    slack_webhook_url: https://hooks.slack.com/services/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
+    slack_webhook_url: "{{ lookup('env', 'SLACK_WEBHOOK_URL') }}"
     alert_rule_file: /tmp/alerts.yaml
     alertmanager_secret_file: /tmp/alertmanager-config.yaml
 
